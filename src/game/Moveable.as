@@ -1,0 +1,94 @@
+﻿package game 
+{
+	import net.flashpunk.Entity;
+	
+	/**
+	 * Base class for moving Entities to handle collision.
+	 */
+	public class Moveable extends Entity
+	{
+		/**
+		 * Entity -type- to consider solid when colliding.
+		 */
+		public var solid:String = "solid";
+		
+		/**
+		 * Constructor.
+		 */
+		public function Moveable() 
+		{
+			
+		}
+		
+		/**
+		 * Moves the entity by the specified amount horizontally and vertically.
+		 */
+		public function move(moveX:Number = 0, moveY:Number = 0):void
+		{
+			// movement counters
+			_mx += moveX;
+			_my += moveY;
+			moveX = Math.round(_mx);
+			moveY = Math.round(_my);
+			_mx -= moveX;
+			_my -= moveY;
+			
+			// movement vars
+			var sign:int, e:Entity;
+			
+			// horizontal
+			if (moveX != 0)
+			{
+				sign = moveX > 0 ? 1 : -1;
+				while (moveX != 0)
+				{
+					moveX -= sign;
+					if ((e = collide(solid, x + sign, y)))
+					{
+						collideX(e);
+						moveX = 0;
+					}
+					else x += sign;
+				}
+			}
+			
+			// vertical
+			if (moveY != 0)
+			{
+				sign = moveY > 0 ? 1 : -1;
+				while (moveY != 0)
+				{
+					moveY -= sign;
+					if ((e = collide(solid, x, y + sign)))
+					{
+						collideY(e);
+						moveY = 0;
+					}
+					else y += sign;
+				}
+			}
+		}
+		
+		/**
+		 * Horizontal collision (override for specific behaviour).
+		 */
+		protected function collideX(e:Entity):void
+		{
+			
+		}
+		
+		/**
+		 * Vertical collision (override for specific behaviour).
+		 */
+		protected function collideY(e:Entity):void
+		{
+			
+		}
+		
+		/**
+		 * Helper vars used by move().
+		 */
+		private var _mx:Number = 0;
+		private var _my:Number = 0;
+	}
+}

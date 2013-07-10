@@ -1,0 +1,25 @@
+<project>
+	<name>Platformer Test</name>
+	<settings>
+		<bgColor>#202020</bgColor>
+		<defaultWidth>640</defaultWidth>
+		<defaultHeight>480</defaultHeight>
+		<defaultWidth>640</defaultWidth>
+		<minWidth>32</minWidth>
+		<minHeight>32</minHeight>
+		<maxWidth>99999999</maxWidth>
+		<maxHeight>99999999</maxHeight>
+		<workingDirectory>gfx</workingDirectory>
+	</settings>
+	<objects>
+		<object name="player" image="player.png" width="32" height="32" limit="1"/>
+	</objects> 
+	<tilesets>
+		<tileset name="tiles" image="tiles.png" tileWidth="16" tileHeight="16"/>
+	</tilesets> 
+	<layers>
+		<objects name="objects" gridSize="16" drawGridSize="64" />
+		<grid name="solid" color="#FFFF6699" gridSize="16" drawGridSize="64" exportAsObjects="true" />
+		<tiles name="tiles" gridSize="16" drawGridSize="64" />
+	</layers>
+</project>
