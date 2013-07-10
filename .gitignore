@@ -10,3 +10,8 @@ out/
 # Project files, i.e. `.project`, `.actionScriptProperties` and `.flexProperties`
 # should NOT be excluded as they contain compiler settings and other important
 # information for Eclipse / Flash Builder.
+
+# Ignoring idea project files, because they cray.
+.idea/
+*.iml
+html-template/
