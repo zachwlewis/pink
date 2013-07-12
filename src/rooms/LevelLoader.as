@@ -3,22 +3,22 @@
 	import flash.utils.ByteArray;
 	import net.flashpunk.World;
 	
-	/**
-	 * Just a base level class for loading XML.
-	 */
+	/** A level with the ability to load XML files. */
 	public class LevelLoader extends World
 	{
-		/**
-		 * The loading XML file.
-		 */
+		/** The loading XML file describing the level. */
 		public var level:XML;
 		
 		/**
-		 * Pass the XML source into the constructor.
+		 * Constructor
+		 * @param	source The XML source of the level.
 		 */
 		public function LevelLoader(source:Class) 
 		{
+			// Convert the source XML into a ByteArray
 			var file:ByteArray = new source;
+			
+			// Read the ByteArray and convert it to an XML Object for parsing by children.
 			level = XML(file.readUTFBytes(file.length));
 		}
 	}
