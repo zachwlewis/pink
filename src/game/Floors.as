@@ -1,28 +1,22 @@
-﻿package game
+package game
 {
 	import net.flashpunk.Entity;
 	import net.flashpunk.graphics.Tilemap;
 	import net.flashpunk.masks.Grid;
 	
-	/**
-	 * Floors entity that contains the collision grid.
-	 */
+	/** Floors entity that contains the collision grid. */
 	public class Floors extends Entity
 	{
-		/**
-		 * Embed the tileset graphic.
-		 */
+		/** Embed the tileset graphic. */
 		[Embed(source = '../../assets/tiles.png')] private static const TILES:Class;
 		
-		/**
-		 * Floors information.
-		 */
+		/** The image for the floors. */
 		public var tiles:Tilemap;
+		
+		/** The collision for the floors. */
 		public var grid:Grid;
 		
-		/**
-		 * Constructor. Load the floors from the level XML.
-		 */
+		/** Constructor. Load the floors from the level XML. */
 		public function Floors(level:XML) 
 		{
 			// set entity type
