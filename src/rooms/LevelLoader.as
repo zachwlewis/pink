@@ -1,4 +1,4 @@
-﻿package rooms 
+package rooms 
 {
 	import flash.utils.ByteArray;
 	import net.flashpunk.World;
