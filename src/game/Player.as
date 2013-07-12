@@ -1,4 +1,4 @@
-﻿package game 
+package game 
 {
 	import flash.geom.Point;
 	import net.flashpunk.graphics.Emitter;
@@ -14,21 +14,15 @@
 	
 	public class Player extends Moveable
 	{
-		/**
-		 * Player graphic.
-		 */
+		/** Player graphic. */
 		[Embed(source = "../../assets/player.png")] private const PLAYER:Class;
 		public var image:Image = new Image(PLAYER);
 		
-		/**
-		 * Tweeners.
-		 */
+		// Tweeners
 		public const SCALE:LinearMotion = new LinearMotion;
 		public const ROTATE:NumTween = new NumTween;
 		
-		/**
-		 * Movement constants.
-		 */
+		// Movement constants. 
 		public const MAXX:Number = 300;
 		public const MAXY:Number = 800;
 		public const GRAV:Number = 1500;
@@ -38,35 +32,36 @@
 		public const JUMP:Number = -500;
 		public const LEAP:Number = 1.5;
 		
-		/**
-		 * Movement properties.
-		 */
+		// Movement properties.
 		public var onSolid:Boolean;
 		public var spdX:Number = 0;
 		public var spdY:Number = 0;
 		
-		/**
-		 * Particle emitter.
-		 */
+		/** Particle emitter. */
 		public var emitter:Emitter;
 		
 		public function Player(x:int = 0, y:int = 0) 
 		{
+			// Set starting position.
 			this.x = x;
 			this.y = y;
 			
+			// Set the player's image.
 			graphic = image;
 
 			// Set the image origin to the center of the image instead of the top-left.
 			image.centerOrigin();
 			image.smooth = true;
 			
+			// Define the user's hitbox.
 			setHitbox(image.width, image.height, 16, 16);
 			
+			// Add tweens for bouncing and stuff.
 			addTween(SCALE);
 			addTween(ROTATE);
 			SCALE.x = SCALE.y = 1;
 			
+			// Define input keys.
 			Input.define("R", Key.RIGHT);
 			Input.define("L", Key.LEFT);
 			Input.define("JUMP", Key.SPACE, Key.SHIFT, Key.CONTROL, Key.UP, Key.Z, Key.X, Key.A, Key.S);
@@ -77,9 +72,7 @@
 			emitter = (FP.world.classFirst(Particles) as Particles).emitter;
 		}
 		
-		/**
-		 * Update the player.
-		 */
+		/** Update the player. */
 		override public function update():void 
 		{
 			checkFloor();
@@ -98,9 +91,7 @@
 			else onSolid = false;
 		}
 		
-		/**
-		 * Applies gravity to the player.
-		 */
+		/** Applies gravity to the player. */
 		private function gravity():void
 		{
 			if (onSolid) return;
@@ -110,9 +101,7 @@
 			if (spdY > MAXY) spdY = MAXY;
 		}
 		
-		/**
-		 * Accelerates the player based on input.
-		 */
+		/** Accelerates the player based on input. */
 		private function acceleration():void
 		{
 			// evaluate input
@@ -161,9 +150,7 @@
 			}
 		}
 		
-		/**
-		 * Makes the player jump on input.
-		 */
+		/** Makes the player jump on input. */
 		private function jumping():void
 		{
 			if (onSolid && Input.pressed("JUMP"))
@@ -181,9 +168,7 @@
 			}
 		}
 		
-		/**
-		 * Handles animation.
-		 */
+		/** Handles animation. */
 		private function animation():void
 		{
 			// control facing direction
@@ -203,18 +188,14 @@
 			else image.angle = (spdX / MAXX) * 10 + ROTATE.value;
 		}
 		
-		/**
-		 * Horizontal collision handler.
-		 */
+		/** Horizontal collision handler. */
 		override protected function collideX(e:Entity):void 
 		{
 			if (spdX > 100 || spdX < -100) SCALE.setMotion(1, 1.2, 1, 1, .2, Ease.quadIn);
 			spdX = 0;
 		}
 		
-		/**
-		 * Vertical collision handler.
-		 */
+		/** Vertical collision handler. */
 		override protected function collideY(e:Entity):void 
 		{
 			if (spdY > 0)

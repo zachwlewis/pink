@@ -1,4 +1,4 @@
-﻿package rooms 
+package rooms 
 {
 	import game.Background;
 	import game.Floors;
@@ -8,47 +8,43 @@
 	
 	public class Level extends LevelLoader
 	{
-		/**
-		 * Level XML.
-		 */
+		/** Level XML. */
 		[Embed(source = '../../level/level.oel', mimeType = 'application/octet-stream')] private static const LEVEL:Class;
 		
-		/**
-		 * Camera following information.
-		 */
+		/** Camera following information. */
 		public const FOLLOW_TRAIL:Number = 50;
 		public const FOLLOW_RATE:Number = .9;
 		
-		/**
-		 * Size of the level (so it knows where to keep the player + camera in).
-		 */
+		/** Size of the level (so it knows where to keep the player + camera in). */
 		public var width:uint;
 		public var height:uint;
 		public var player:Player;
 		
-		/**
-		 * Constructor.
-		 */
+		/** Constructor. */
 		public function Level()
 		{
+			// Pass the level data to the superclass for loading.
 			super(LEVEL);
+			
+			// Read the level dimensions from the level.
 			width = level.width;
 			height = level.height;
 			
+			// Add entities for floors, the cool particles and sweet backgrounds.
 			add(new Floors(level));
 			add(new Particles);
 			add(new Background);
 			
+			// Get all the players (there should only be one).
 			for each (var p:XML in level.objects[0].player)
 			{
+				// Create the player and add it to the level.
 				player = new Player(p.@x, p.@y);
 				add(player);
 			}
 		}
 		
-		/**
-		 * Update the level.
-		 */
+		/** Update the level. */
 		override public function update():void 
 		{
 			// update entities
@@ -58,9 +54,7 @@
 			cameraFollow();
 		}
 		
-		/**
-		 * Makes the camera follow the player object.
-		 */
+		/** Makes the camera follow the player object. */
 		private function cameraFollow():void
 		{
 			// make camera follow the player
@@ -77,10 +71,10 @@
 			FP.camera.y = FP.clamp(FP.camera.y, 0, height - FP.height);
 		}
 		
-		/**
-		 * Getter functions used to get the position to place the camera when following the player.
-		 */
+		/** The player's X location. */
 		private function get targetX():Number { return player.x - FP.width / 2; }
+		
+		/** The player's Y location. */
 		private function get targetY():Number { return player.y - FP.height / 2; }
 	}
 }
